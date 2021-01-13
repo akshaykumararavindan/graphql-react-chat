@@ -1,0 +1,12 @@
+import pg from "pg";
+const { Pool } = pg;
+
+const pool = new Pool({
+  user: "postgres",
+  host: "localhost",
+  database: "userdb",
+  password: "userdb",
+  port: 5432,
+});
+
+export { pool };
