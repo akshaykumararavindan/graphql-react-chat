@@ -30,14 +30,12 @@ router.post("/login", async (req, res, next) => {
                 return res.status(500).json({
                   error: `Internal Server Error: ${error}`,
                 });
-              } else {
-                req.session.key = email;
-                req.session.isLoggedIn = true;
-                console.log(passport);
-                return res.status(200).json({ user: user.rows[0].email });
               }
             });
           }
+          req.session.key = email;
+          req.session.isLoggedIn = true;
+          res.status(200).json({ user: user.rows[0].email });
         } catch (error) {
           return next(error);
         }
@@ -49,24 +47,39 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.post("/signup", async (req, res) => {
-  const { email, password, firstName, lastName, username, age } = req.body;
-  if (!email || !password || !firstName || !lastName) {
-    res.status(401).send("Please enter all required credentials!");
-  } else {
-    const user = await pool.query(
-      `SELECT email, password FROM users WHERE email='${email}';`
-    );
-    if (user.rows[0].email === email) {
-      res.status(401).json({ message: "User with that email already exists!" });
-      return;
+router.post("/register", async (req, res) => {
+  try {
+    const {
+      email,
+      password,
+      firstName,
+      lastName,
+      username,
+      birthday,
+    } = req.body;
+    if (!email) {
+      console.log(req.body);
+      res.status(401).send("Please enter all required credentials!");
     } else {
-      const hashedPassword = await hash(password, 10);
-      const query = `INSERT INTO users (email, firstName, lastName, age, password, username) VALUES ('${email}', '${firstName}', '${lastName}', ${age}, '${hashedPassword}', '${username}');`;
-      const result = await pool.query(query);
-      console.log(result);
-      return;
+      console.log(req.body);
+      const user = await pool.query(
+        `SELECT email FROM users WHERE email='${email}';`
+      );
+      console.log(user.rows);
+      if (user.rows.length !== 0) {
+        res
+          .status(401)
+          .json({ message: "User with that email already exists!" });
+        return;
+      } else {
+        const hashedPassword = await hash(password, 10);
+        console.log(hashedPassword);
+        const query = `INSERT INTO users (email, firstName, lastName, age, password, username) VALUES ('${email}', '${firstName}', '${lastName}', ${birthday}, '${hashedPassword}', '${username}');`;
+        return await pool.query(query);
+      }
     }
+  } catch (error) {
+    console.error(error);
   }
 });
 

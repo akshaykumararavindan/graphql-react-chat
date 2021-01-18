@@ -7,10 +7,12 @@ import cors from "cors";
 import path from "path";
 import redisStore from "connect-redis";
 import redis from "redis";
+import cookieParser from "cookie-parser";
 
 // Route imports
-import auth from "./routes/account/account.js";
+import account from "./routes/account/account.js";
 import posts from "./routes/posts/posts.js";
+import pages from "./routes/pages/dashboard.js";
 
 const redisClient = redis.createClient({
   host: "localhost",
@@ -27,7 +29,7 @@ const app = express();
     console.log("Error connecting to redis!" + err);
   });
 
-  redisClient.on("connect", (err, res) => {
+  redisClient.on("connect", () => {
     console.log("Connected to redis!");
   });
 
@@ -43,6 +45,7 @@ const app = express();
   passportLocal(passport);
 
   app.use(express.json());
+  app.use(cookieParser());
   app.use(
     cors({
       origin: "http://localhost:3000",
@@ -75,8 +78,9 @@ const app = express();
   app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
   // Routes
-  app.use("/auth", auth);
+  app.use("/account", account);
   app.use("/posts", posts);
+  app.use("/pages", pages);
 
   app.get("/", (req, res) => {
     // session = req.session;

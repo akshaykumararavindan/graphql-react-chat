@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { userLogin } from "../store/actions";
 import { useAuthState, useAuthDispatch } from "../store/context";
@@ -9,7 +9,7 @@ const Login = () => {
 
   const history = useHistory();
   const dispatch = useAuthDispatch();
-  const { loading, error } = useAuthState();
+  const { user, loading, error } = useAuthState();
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -19,15 +19,16 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {}, []);
-
   return (
     <>
-      <div>
+      {loading && <div className="loader"></div>}
+      {error && <p>{error}</p>}
+      <div
+        className="flex-container"
+        style={{ display: "flex", flexDirection: "column" }}
+      >
         <form>
-          <div>
-            {loading && <p>Logging in if no errors please wait</p>}
-            {error && <p>{error}</p>}
+          <div style={{ flexDirection: "column" }}>
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -35,9 +36,10 @@ const Login = () => {
               placeholder="Enter Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
-          <div>
+          <div style={{ flexDirection: "column" }}>
             <label htmlFor="password">Password</label>
             <input
               type="text"
@@ -45,12 +47,16 @@ const Login = () => {
               placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
-          <div>
+          <div style={{ flexDirection: "column" }}>
             <button type="submit" onClick={submitForm}>
               Login
             </button>
+            <p>
+              Need account? <a href="/register">Register here.</a>
+            </p>
           </div>
         </form>
       </div>

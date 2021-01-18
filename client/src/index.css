@@ -1,13 +1,77 @@
+* {
+  box-sizing: border-box;
+  background-color: black;
+  color: green;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+.flex-container {
+  display: "flex";
+  align-items: "center";
+  flex-direction: "row";
+  margin: "auto";
+  justify-content: "center";
+  height: "50%";
+  width: "50%";
+  border: "1px solid black";
+}
+
+.flex-item {
+  margin: auto;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: auto;
+  display: inline-block;
+  padding: 1px;
+  margin: 3px;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 2);
+  border: 1px solid white;
+  transition: 0.3s;
+  width: 40%;
+  float: right;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 2);
+}
+.container {
+  padding: 2px 16px;
+}
+
+.loader {
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid #3498db; /* Blue */
+  border-radius: 100%;
+  width: 25px;
+  height: 25px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

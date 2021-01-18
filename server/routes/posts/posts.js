@@ -27,8 +27,18 @@ router.post("/addpost", async (req, res) => {
   // }
 });
 
-router.get("/all", (req, res) => {
-  console.log("Hllo");
+router.get("/allposts", async (req, res) => {
+  const query = `SELECT * FROM posts;`;
+  const posts = await pool.query(query);
+  if (posts) {
+    res.json(posts);
+  } else {
+    res.status(400).json({ error: "No posts found" });
+  }
+});
+
+router.post("/test", async (req, res) => {
+  console.log(req.cookies);
 });
 
 export default router;
