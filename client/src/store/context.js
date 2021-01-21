@@ -8,7 +8,7 @@ export function useAuthState() {
   const context = useContext(AuthStateContext);
 
   if (context === undefined) {
-    throw new Error("error with auth context");
+    throw new Error("error with Auth State Context");
   }
   return context;
 }
@@ -17,7 +17,7 @@ export function useAuthDispatch() {
   const context = useContext(AuthDispatchContext);
 
   if (context === undefined) {
-    throw new Error("error with auth context");
+    throw new Error("Error with Auth Dispatch Context");
   }
   return context;
 }

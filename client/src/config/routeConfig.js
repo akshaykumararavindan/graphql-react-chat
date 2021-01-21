@@ -1,6 +1,7 @@
 import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
 import Register from "../pages/Register";
+import PostPage from "../pages/PostPage";
 
 const routes = [
   {
@@ -16,6 +17,11 @@ const routes = [
   {
     path: "/dashboard",
     component: Dashboard,
+    isPrivate: true,
+  },
+  {
+    path: "/postpage",
+    component: PostPage,
     isPrivate: true,
   },
   {

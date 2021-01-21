@@ -1,7 +1,7 @@
 {
   "name": "social-media-app_",
   "version": "1.0.0",
-  "description": "Social media app using postgresql typeorm and socketio",
+  "description": "Social media app",
   "main": "server.js",
   "type": "module",
   "scripts": {

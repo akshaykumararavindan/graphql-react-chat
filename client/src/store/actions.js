@@ -60,17 +60,21 @@ export const userRegister = async (
 export const userLogout = async (dispatch) => {
   dispatch({ type: constants.LOGOUT });
   localStorage.removeItem("loggedInUser");
-  await axios.get(`http://localhost:5000/account/logout`);
+  await axios.get(`${URL}/account/logout`);
   return;
 };
 
-export const dashboard = async () => {
+export const dashboard = async (dispatch) => {
   try {
-    const result = await axios.get(`${URL}/pages/dashboard`);
-    console.log(result);
+    dispatch({ type: constants.GET_ALL_POSTS_REQUEST });
+    const result = await axios.get(`${URL}/posts/allposts`, {
+      withCredentials: true,
+    });
+    if (result) {
+      dispatch({ type: constants.GET_ALL_POSTS_SUCCESS, payload: result.data });
+    }
     return result;
   } catch (error) {
-    console.error(error);
-    throw error;
+    dispatch({ type: constants.GET_ALL_POSTS_FAILURE, payload: error.error });
   }
 };

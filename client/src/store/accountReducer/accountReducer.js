@@ -9,6 +9,7 @@ export const initialState = {
   loading: false,
   error: null,
   posts: {},
+  post: {},
   settings: {},
 };
 
@@ -48,6 +49,39 @@ export const ContextReducer = (initialState, action) => {
         error: action.error,
       };
     }
+    case constants.GET_ALL_POSTS_REQUEST: {
+      return {
+        ...initialState,
+        loading: true,
+        error: null,
+      };
+    }
+
+    case constants.GET_ALL_POSTS_SUCCESS: {
+      return {
+        ...initialState,
+        loading: false,
+        error: false,
+        posts: action.payload,
+      };
+    }
+    case constants.GET_ALL_POSTS_FAILURE: {
+      return {
+        ...initialState,
+        error: action.error,
+        loading: false,
+      };
+    }
+
+    case constants.GET_SINGLE_POST_SUCCESS: {
+      return {
+        ...initialState,
+        post: action.payload,
+        loading: false,
+        error: null,
+      };
+    }
+
     case constants.LOGOUT: {
       return {
         loginState: {},

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { dashboard, userLogout } from "../store/actions";
 import axios from "axios";
 import { useAuthDispatch, useAuthState } from "../store/context";
-import Cookies from "js-cookie";
 import PostsCard from "../components/PostsCard";
 
 const Dashboard = () => {
@@ -11,22 +10,12 @@ const Dashboard = () => {
 
   const { user, loading, error } = useAuthState();
 
-  const fetchPosts = async () => {
-    const result = await axios.get("http://localhost:5000/posts/allposts", {
-      withCredentials: true,
-    });
-    console.log(result);
-    setPosts(result);
-    console.log(posts);
-    return result;
-  };
-
   const logoutHandler = async () => {
     await userLogout(dispatch);
   };
 
   useEffect(() => {
-    fetchPosts();
+    dashboard(dispatch).then((res) => setPosts(res));
   }, []);
 
   return (
